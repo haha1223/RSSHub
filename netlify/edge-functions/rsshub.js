@@ -9,24 +9,26 @@ const require = createRequire(import.meta.url);
 const rsshub = require('../../app.js');
 
 export default async (req, context) => {
-  return new Promise((resolve) => {
-    const res = {
-      writeHead: (status, headers) => {
-        res.status = status;
-        res.headers = headers;
-      },
-      end: (body) => {
-        resolve(new Response(body, {
-          status: res.status || 200,
-          headers: res.headers || {}
-        }));
-      }
-    };
+    return new Promise((resolve) => {
+        const res = {
+            writeHead: (status, headers) => {
+                res.status = status;
+                res.headers = headers;
+            },
+            end: (body) => {
+                resolve(
+                    new Response(body, {
+                        status: res.status || 200,
+                        headers: res.headers || {},
+                    })
+                );
+            },
+        };
 
-    rsshub(req, res);
-  });
+        rsshub(req, res);
+    });
 };
 
 export const config = {
-  path: "/*"
+    path: '/*',
 };
