@@ -1,5 +1,5 @@
 [build]
-  command = "npm ci --production"
+  command = "npm install --omit=dev"
   publish = ""
   environment = { NODE_VERSION = "20", NODE_ENV = "production" }
 
