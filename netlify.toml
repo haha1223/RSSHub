@@ -1,5 +1,5 @@
 [build]
-  command = "npm install --omit=dev"
+  command = "yarn install --production"
   publish = ""
   environment = { NODE_VERSION = "20", NODE_ENV = "production" }
 
