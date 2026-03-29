@@ -1,11 +1,10 @@
 [build]
-  command = "pnpm install --prod --frozen-lockfile false"
+  command = "pnpm install --prod"
   publish = ""
-  environment = { NODE_VERSION = "20", NODE_ENV = "production" }
+  environment = { NODE_VERSION = "22", NODE_ENV = "production" }
 
 [functions]
-  node_bundler = "esbuild"
-  external_node_modules = ["express", "axios", "cheerio", "puppeteer-core"]
+  node_bundler = "nft"
   directory = "netlify/functions"
 
 [[redirects]]
