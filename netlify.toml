@@ -1,12 +1,12 @@
 [build]
-  command = "pnpm install --prod"
-  publish = ""
+command = "pnpm install --prod"
+publish = ""
 
 [build.environment]
-  NODE_VERSION = "22"
-  NODE_ENV = "production"
+NODE_VERSION = "22"
+NODE_ENV = "production"
 
 [[redirects]]
-  from = "/*"
-  to = "/.netlify/edge-functions/rsshub"
-  status = 200
+from = "/*"
+to = "/.netlify/edge-functions/rsshub"
+status = 200
