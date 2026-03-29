@@ -1,0 +1,15 @@
+[build]
+  command = "npm ci --production"
+  publish = ""
+  environment = { NODE_VERSION = "20", NODE_ENV = "production" }
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["express", "axios", "cheerio", "puppeteer-core"]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/rsshub"
+  status = 200
+  force = true
