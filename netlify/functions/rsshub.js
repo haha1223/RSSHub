@@ -1,38 +1,40 @@
-const express = require('express');
-const { createServer } = require('http');
-const app = require('../../app.js');
+// 必须用 import，不能用 require
+import app from '../../app.js';
+import init from '../../lib/init.js';
 
-// 适配 Netlify Function 运行时
-module.exports.handler = async (event, context) => {
-  // 确保不重复初始化
-  if (!app._router) {
-    await require('../../lib/init')();
-  }
+export const handler = async (event, context) => {
+  try {
+    // 初始化 RSSHub
+    if (!app._router) {
+      await init();
+    }
 
-  // 把 Netlify 请求转成 Express 处理
-  return new Promise((resolve) => {
-    const server = createServer(app);
-
-    // 模拟 HTTP 请求
-    server.emit('request', {
-      method: event.httpMethod,
-      url: event.path,
-      headers: event.headers,
-      query: event.queryStringParameters,
-      body: event.body,
-    }, {
-      statusCode: 200,
-      setHeader: (name, value) => {
-        context.res.setHeader(name, value);
-      },
-      end: (body) => {
-        resolve({
-          statusCode: context.res.statusCode,
-          headers: context.res.headers,
-          body,
-        });
-        server.close();
-      },
+    return new Promise((resolve) => {
+      app(
+        {
+          method: event.httpMethod,
+          path: event.path,
+          headers: event.headers,
+          query: event.queryStringParameters,
+          body: event.body,
+        },
+        {
+          send: (body) => {
+            resolve({
+              statusCode: 200,
+              headers: {
+                'Content-Type': 'application/xml; charset=utf-8',
+              },
+              body,
+            });
+          },
+        }
+      );
     });
-  });
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: err.message,
+    };
+  }
 };
