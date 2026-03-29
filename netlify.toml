@@ -1,14 +1,14 @@
 [build]
-  command = "pnpm install --prod"
-  publish = ""
-  environment = { NODE_VERSION = "22", NODE_ENV = "production" }
+command = "pnpm install --prod"
+publish = ""
+environment = { NODE_VERSION = "22", NODE_ENV = "production" }
 
 [functions]
-  node_bundler = "nft"
-  directory = "netlify/functions"
+node_bundler = "nft"
+directory = "netlify/functions"
 
 [[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/rsshub"
-  status = 200
-  force = true
+from = "/*"
+to = "/.netlify/functions/rsshub"
+status = 200
+force = true
